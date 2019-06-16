@@ -2,7 +2,38 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-string reverseWord(string str){
+//stack implementation
+string reverseWords(string str){
+    if(str.length()==0)
+        return str;
+    stack<string>s;
+    string st;
+    for(int i=0;i<str.length();i++){
+        if(str[i]!='.'){
+            st.push_back(str[i]);
+        }
+        else{
+            s.push(st);
+            st.clear();
+        }
+    }
+    s.push(st);
+    if(s.size()==1)
+        return str;
+    str.clear();
+    while(s.size()>1){
+        str=str+s.top();
+        str.push_back('.');
+        s.pop();
+    }
+    str=str+s.top();
+    s.pop();
+    return str;
+}
+
+
+//normal implementaion
+string reverseWords(string str){
     string s=str;//storing if no '.' is not found
     reverse(str.begin(),str.end());
     vector<int>v;
@@ -33,7 +64,7 @@ int main()
 	while(t--){
 	    string str;
 	    cin>>str;
-	    cout<<reverseWord(str)<<endl;
+	    cout<<reverseWords(str)<<endl;
 	}
 	return 0;
 }
